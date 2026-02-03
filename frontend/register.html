@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - SETU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Outfit", sans-serif;
+      }
+      .card-glow {
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+      }
+      .subtle-border {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+  <body class="h-full bg-slate-900 text-white">
+    <div
+      class="min-h-full py-12 px-4 sm:px-6 lg:px-8"
+      style="
+        background: linear-gradient(
+          180deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0f172a 100%
+        );
+      "
+    >
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold">Join SETU</h2>
+          <p class="mt-2 text-white/60">
+            Create your account to access opportunities
+          </p>
+        </div>
+
+        <div
+          class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 subtle-border card-glow"
+        >
+          <form id="registerForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-2"
+                  >First Name *</label
+                >
+                <input
+                  id="firstName"
+                  type="text"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="First name"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2"
+                  >Middle Name</label
+                >
+                <input
+                  id="middleName"
+                  type="text"
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="Middle name"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2"
+                  >Last Name *</label
+                >
+                <input
+                  id="lastName"
+                  type="text"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="Last name"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-2">Email *</label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="your@email.com"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Phone *</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="+1234567890"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-2">Password *</label>
+              <div class="relative">
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  class="w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="Enter password"
+                />
+                <button
+                  type="button"
+                  id="togglePassword"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  <svg
+                    id="eyeIcon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="opacity-50 hover:opacity-100"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-2">Age *</label>
+                <input
+                  id="age"
+                  type="number"
+                  required
+                  min="16"
+                  max="100"
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Gender *</label>
+                <select
+                  id="gender"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2"
+                  >Student Type *</label
+                >
+                <select
+                  id="studentType"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
+                >
+                  <option value="">Select type</option>
+                  <option value="undergraduate">Undergraduate</option>
+                  <option value="postgraduate">Postgraduate</option>
+                  <option value="intern">Intern</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-2"
+                >Field of Study *</label
+              >
+              <input
+                id="fieldOfStudy"
+                type="text"
+                required
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                placeholder="Eg: Computer Science"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-2"
+                  >Current Year *</label
+                >
+                <input
+                  id="currentYear"
+                  type="number"
+                  required
+                  min="1"
+                  max="10"
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Semester *</label>
+                <input
+                  id="semester"
+                  type="number"
+                  required
+                  min="1"
+                  max="8"
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="0"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Location *</label>
+                <input
+                  id="location"
+                  type="text"
+                  required
+                  class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 text-white placeholder-white/50"
+                  placeholder="Eg: New York"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-white text-slate-900 py-3 px-4 rounded-xl font-medium hover:bg-white/90 transition-colors"
+            >
+              Create Account
+            </button>
+          </form>
+
+          <div class="mt-6 text-center">
+            <p class="text-white/60">
+              Already have an account?
+              <a href="login.html" class="text-white hover:underline"
+                >Sign in</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "http://127.0.0.1:8000";
+
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const passwordInput = document.getElementById("password");
+          const eyeIcon = document.getElementById("eyeIcon");
+
+          if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.innerHTML =
+              '<path d="m1 12s5.6-1.5 11-1.5 11 1.5 11 1.5"/><path d="m3 3 18 18"/>';
+          } else {
+            passwordInput.type = "password";
+            eyeIcon.innerHTML =
+              '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+          }
+        });
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const formData = {
+            first_name: document.getElementById("firstName").value,
+            middle_name: document.getElementById("middleName").value || null,
+            last_name: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            password: document.getElementById("password").value,
+            age: parseInt(document.getElementById("age").value),
+            gender: document.getElementById("gender").value,
+            student_type: document.getElementById("studentType").value,
+            field_of_study: document.getElementById("fieldOfStudy").value,
+            current_year: parseInt(
+              document.getElementById("currentYear").value,
+            ),
+            semester: parseInt(document.getElementById("semester").value),
+            location: document.getElementById("location").value,
+          };
+
+          try {
+            const response = await fetch(`${API_BASE}/register`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              alert("Registration successful! Please login.");
+              window.location.href = "login.html";
+            } else {
+              alert(data.detail || "Registration failed");
+            }
+          } catch (error) {
+            alert("Network error. Please try again.");
+          }
+        });
+    </script>
+  </body>
+</html>
