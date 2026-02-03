@@ -1,0 +1,2 @@
+# TechQuartz
+Ai for bharat
