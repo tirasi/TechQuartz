@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SETU - Student Opportunity Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Outfit', sans-serif;
+    }
+    
+    .card-glow {
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+    }
+    
+    .subtle-border {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-in {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .animate-delay-5 { animation-delay: 0.5s; opacity: 0; }
+  </style>
+ </head>
+ <body class="h-full bg-slate-900 text-white overflow-auto">
+  <div id="app-wrapper" class="min-h-full w-full" style="background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);">
+   <!-- Decorative Elements -->
+   <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-40 right-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl"></div>
+   </div>
+   <div class="relative z-10 max-w-5xl mx-auto px-6 py-12">
+    <!-- Header Section -->
+    <header class="text-center mb-16 animate-fade-in animate-delay-1">
+     <!-- Logo Mark -->
+     <div class="mb-6 float-animation">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/10 subtle-border backdrop-blur-sm">
+       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4L4 12L20 20L36 12L20 4Z" stroke="white" stroke-width="2" stroke-linejoin="round" />
+        <path d="M4 20L20 28L36 20" stroke="white" stroke-width="2" stroke-linejoin="round" />
+        <path d="M4 28L20 36L36 28" stroke="white" stroke-width="2" stroke-linejoin="round" />
+       </svg>
+      </div>
+     </div>
+     <h1 id="main-title" class="text-6xl md:text-7xl font-bold tracking-tight mb-4" style="letter-spacing: -0.02em;">SETU</h1>
+     <div class="flex items-center justify-center gap-4 mb-6">
+      <div class="h-px w-12 bg-gradient-to-r from-transparent to-white/30"></div>
+      <p id="tagline" class="text-lg md:text-xl text-white/70 font-light">Bridging Students to the Right Opportunities</p>
+      <div class="h-px w-12 bg-gradient-to-l from-transparent to-white/30"></div>
+     </div>
+    </header>
+    
+    <!-- Divider -->
+    <div class="flex items-center justify-center mb-12 animate-fade-in animate-delay-2">
+     <div class="h-px w-full max-w-xs bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+    </div>
+    
+    <!-- Feature Cards -->
+    <section class="grid md:grid-cols-3 gap-6 mb-16">
+     <!-- Card 1 - Scholarships -->
+     <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 subtle-border card-glow hover:bg-white/10 transition-all duration-300 animate-fade-in animate-delay-2">
+      <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+       </svg>
+      </div>
+      <h3 id="feature-1-title" class="text-xl font-semibold mb-3">Scholarships</h3>
+      <p id="feature-1-desc" class="text-white/60 font-light leading-relaxed">Find and apply for scholarships tailored to your background and academic achievements.</p>
+     </div>
+     
+     <!-- Card 2 - Internships -->
+     <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 subtle-border card-glow hover:bg-white/10 transition-all duration-300 animate-fade-in animate-delay-3">
+      <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+       </svg>
+      </div>
+      <h3 id="feature-2-title" class="text-xl font-semibold mb-3">Internships</h3>
+      <p id="feature-2-desc" class="text-white/60 font-light leading-relaxed">Discover internship opportunities with government departments and partner organizations.</p>
+     </div>
+     
+     <!-- Card 3 - Career Guidance -->
+     <div class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 subtle-border card-glow hover:bg-white/10 transition-all duration-300 animate-fade-in animate-delay-4">
+      <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4" />
+        <path d="M12 8h.01" />
+        <path d="M8 12h8" />
+       </svg>
+      </div>
+      <h3 id="feature-3-title" class="text-xl font-semibold mb-3">Career Guidance</h3>
+      <p id="feature-3-desc" class="text-white/60 font-light leading-relaxed">Get personalized career advice and mentorship from experienced professionals.</p>
+     </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="bg-white/5 backdrop-blur-sm rounded-3xl p-8 mb-16 subtle-border animate-fade-in animate-delay-4">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+       <div class="text-3xl md:text-4xl font-bold mb-1">50K+</div>
+       <div class="text-white/50 text-sm font-light">Students Registered</div>
+      </div>
+      <div>
+       <div class="text-3xl md:text-4xl font-bold mb-1">200+</div>
+       <div class="text-white/50 text-sm font-light">Scholarships Available</div>
+      </div>
+      <div>
+       <div class="text-3xl md:text-4xl font-bold mb-1">150+</div>
+       <div class="text-white/50 text-sm font-light">Partner Organizations</div>
+      </div>
+      <div>
+       <div class="text-3xl md:text-4xl font-bold mb-1">28</div>
+       <div class="text-white/50 text-sm font-light">States Covered</div>
+      </div>
+     </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="text-center mb-16 animate-fade-in animate-delay-5">
+     <div class="space-y-4">
+      <a href="register.html" class="inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-full font-medium text-lg hover:bg-white/90 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/20 mr-4">
+       <span>Get Started</span>
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+       </svg>
+      </a>
+      <a href="login.html" class="inline-flex items-center gap-3 bg-white/10 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105 border border-white/20">
+       <span>Sign In</span>
+      </a>
+     </div>
+     <p class="text-white/40 text-sm mt-4 font-light">Free registration • No hidden charges</p>
+    </section>
+    
+    <!-- Divider -->
+    <div class="flex items-center justify-center mb-8">
+     <div class="h-px w-full max-w-md bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="text-center pb-8">
+     <div class="flex items-center justify-center gap-2 mb-4">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" opacity="0.5">
+       <path d="M12 2L2 7l10 5 10-5-10-5z" />
+       <path d="M2 17l10 5 10-5" />
+       <path d="M2 12l10 5 10-5" />
+      </svg>
+      <span class="text-white/50 text-sm font-light">SETU</span>
+     </div>
+     <p id="footer-text" class="text-white/40 text-sm font-light mb-4">A Government Initiative for Student Welfare</p>
+     <div class="flex items-center justify-center gap-6 text-white/30 text-xs">
+      <span>Privacy Policy</span>
+      <span>•</span>
+      <span>Terms of Service</span>
+      <span>•</span>
+      <span>Contact Us</span>
+     </div>
+    </footer>
+   </div>
+  </div>
+ </body>
+</html>
