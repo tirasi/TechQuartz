@@ -1,0 +1,26 @@
+[
+  {
+    "id": "SCH001",
+    "title": "National Scholarship Portal",
+    "category": "Scholarship",
+    "education_level": "UG",
+    "eligibility": {
+      "min_age": 17,
+      "max_age": 25
+    },
+    "deadline": "2026-03-15",
+    "link": "https://scholarships.gov.in"
+  },
+  {
+    "id": "INT001",
+    "title": "AICTE Internship",
+    "category": "Internship",
+    "education_level": "UG",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 30
+    },
+    "deadline": "2026-02-20",
+    "link": "https://internship.aicte-india.org"
+  }
+]
