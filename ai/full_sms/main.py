@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from ai.full_sms.ai.api.sms_webhook import router as sms_router
+from ai.full_sms.api.sms_webhook import router as sms_router
+
 
 app = FastAPI(title="AI Platform")
 

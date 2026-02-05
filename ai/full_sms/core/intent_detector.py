@@ -1,13 +1,24 @@
-def detect_intent(message: str) -> str:
+def detect_intent(message: str) -> list:
     msg = message.lower()
+    intents = []
 
-    if "job" in msg:
-        return "job"
-    if "intern" in msg:
-        return "internship"
-    if "scheme" in msg or "yojana" in msg:
-        return "govt_scheme"
-    if "fellowship" in msg:
-        return "fellowship"
+    # Job related
+    if any(word in msg for word in ["job", "naukri", "employment"]):
+        intents.append("job")
 
-    return "unknown"
+    # Internship
+    if any(word in msg for word in ["intern", "internship", "training"]):
+        intents.append("internship")
+
+    # Scholarship / Fellowship
+    if any(word in msg for word in ["scholarship", "stipend"]):
+        intents.append("scholarship")
+
+    if any(word in msg for word in ["fellowship", "research grant"]):
+        intents.append("fellowship")
+
+    # Government / Financial schemes
+    if any(word in msg for word in ["scheme", "yojana", "govt scheme"]):
+        intents.append("scheme")
+
+    return intents or ["unknown"]

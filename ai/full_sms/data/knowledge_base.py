@@ -1,54 +1,38 @@
 KNOWLEDGE_BASE = {
-    "jobs": {
-        "student": {
-            "text": (
-                "Students can explore jobs on LinkedIn, Indeed, "
-                "and government portals like NCS. "
-                "Freshers roles are updated daily."
-            ),
-            "links": [
-                "https://www.linkedin.com/jobs",
-                "https://www.indeed.com",
-                "https://www.ncs.gov.in"
-            ]
+    "job": {
+        "general": {
+            "text": "Here are some job opportunities.",
+            "links": ["https://example.com/jobs"]
         }
     },
-
     "internship": {
-        "student": {
-            "text": (
-                "Internships are available on Internshala, AICTE, "
-                "and company career pages. "
-                "Many are paid and remote."
-            ),
+        "general": {
+            "text": "Here are some internship opportunities.",
+            "links": ["https://example.com/internships"]
+        }
+    },
+    "scholarship": {
+        "general": {
+            "text": "Here are some scholarship opportunities for students.",
             "links": [
-                "https://internshala.com",
-                "https://www.aicte-india.org"
+                "https://scholarships.gov.in",
+                "https://www.buddy4study.com"
             ]
         }
     },
-
-    "govt_scheme": {
-        "female": {
-            "text": (
-                "Government schemes for women include Beti Bachao Beti Padhao, "
-                "PM Mudra Yojana, and Ujjwala Yojana."
-            ),
+    "fellowship": {
+        "general": {
+            "text": "Here are some fellowship and research grant opportunities.",
             "links": [
-                "https://www.india.gov.in",
-                "https://www.myscheme.gov.in"
+                "https://www.ugc.ac.in",
+                "https://www.dst.gov.in"
             ]
-        },
-
-        "senior": {
-            "text": (
-                "Senior citizens can access schemes like PM Vaya Vandana Yojana, "
-                "Senior Citizen Savings Scheme, and Ayushman Bharat."
-            ),
-            "links": [
-                "https://www.india.gov.in",
-                "https://www.myscheme.gov.in"
-            ]
+        }
+    },
+    "scheme": {
+        "general": {
+            "text": "Here are some government schemes you may be eligible for.",
+            "links": ["https://www.myscheme.gov.in"]
         }
     }
 }

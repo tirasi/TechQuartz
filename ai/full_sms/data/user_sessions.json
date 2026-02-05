@@ -1,0 +1,14 @@
+{
+  "+919999999999": {
+    "intent": "scholarship",
+    "language": "or",
+    "profile": {
+      "education": "bba",
+      "category": "sc",
+      "gender": "male",
+      "location": "odisha"
+    },
+    "step": "location",
+    "completed": true
+  }
+}

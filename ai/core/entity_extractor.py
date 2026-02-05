@@ -9,13 +9,3 @@ def extract_profile(message: str) -> str:
         return "student"
 
     return "general"
-
-def extract_location(message: str) -> str:
-    msg = message.lower()
-
-    if "bhubaneswar" in msg:
-        return "bhubaneswar"
-    if "odisha" in msg:
-        return "odisha"
-
-    return "india"
