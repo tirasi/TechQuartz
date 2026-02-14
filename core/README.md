@@ -1,14 +1,14 @@
 # InfoNest
-An AI-powered system designed to improve access to educational information and opportunities for underserved and government college students.
+An AI-powered system designed to improve access to educational information and opportunities for underserved and students.
 
 ## Overview
 
-The Student Opportunity Platform aggregates public data on scholarships, internships, competitions, loans, and government schemes, making this information accessible through multilingual and voice-first interfaces. By capturing student interests and providing AI-driven explanations for recommendations, the platform helps students discover opportunities aligned with their goals while maintaining ethical standards and explainability.
+The InfoNest Platform aggregates public data on scholarships, internships, competitions, loans, and government schemes, making this information accessible through multilingual and voice-first interfaces. By capturing student interests and providing AI-driven explanations for recommendations, the platform helps students discover opportunities aligned with their goals while maintaining ethical standards and explainability.
 
 ## Key Features
 
 ### 1. Multilingual Access
-- Support for 10+ major Indian languages (Hindi, Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Bengali, Punjabi, Odia)
+- Support for 5 major Indian languages (English, Hindi, Tamil, Marathi, Bengali, Odia)
 - Semantic accuracy in translations
 - Automatic fallback to English when translations unavailable
 
