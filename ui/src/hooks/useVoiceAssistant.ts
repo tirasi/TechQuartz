@@ -77,18 +77,23 @@ export const useVoiceAssistant = (
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = langMap[language] || 'en-US';
     utterance.pitch = 1.2;
-    utterance.rate = 1.0;
+    utterance.rate = 0.9;
 
     const voices = synthRef.current.getVoices();
     const langCode = langMap[language]?.split('-')[0] || 'en';
-    const femaleVoice = voices.find(
-      (v) => v.lang.startsWith(langCode) && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman'))
+    
+    const indianVoice = voices.find(
+      (v) => v.lang.includes('-IN') && v.lang.startsWith(langCode) && 
+      (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman'))
     ) || voices.find(
-      (v) => v.lang.startsWith(langCode)
+      (v) => v.lang.includes('-IN') && v.lang.startsWith(langCode)
+    ) || voices.find(
+      (v) => v.lang.startsWith(langCode) && 
+      (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman'))
     );
 
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
+    if (indianVoice) {
+      utterance.voice = indianVoice;
     }
 
     utterance.onend = () => {

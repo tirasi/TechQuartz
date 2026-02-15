@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "id": "abc@gmail.com",
+      "email": "abc@gmail.com",
+      "phone": null,
+      "password": "$2b$12$snyuJ.wXbf.2Zumd8Axod.kawUYANPaDPHQ5v85VAn4UIswBZbLHW",
+      "onboarding_completed": true,
+      "profile_completed": true,
+      "language_selected": true,
+      "voice_enabled": true,
+      "preferences_set": true,
+      "intent_set": true,
+      "created_at": "2026-02-14T10:02:24.441640",
+      "student_type": "Undergraduate",
+      "gender": "Female",
+      "location": "Odisha",
+      "semester": 8,
+      "language": "mr",
+      "interests": [
+        "Engineering",
+        "Education",
+        "Sports"
+      ],
+      "intents": [
+        "Scholarships",
+        "Internships"
+      ]
+    }
+  ]
+}
