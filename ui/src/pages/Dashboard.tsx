@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useApp, Opportunity } from "@/contexts/AppContext";
 import GlassCard from "@/components/GlassCard";
 import NeonButton from "@/components/NeonButton";
+import LilyChatbot from "@/components/LilyChatbot";
 import {
   Sparkles, GraduationCap, Briefcase, Building2, Clock, TrendingUp,
   Bell, BellRing, ChevronDown, ChevronUp, LogOut, Filter, Search, Settings, Globe, Mic, MicOff, X,
@@ -440,6 +441,8 @@ const Dashboard = () => {
           </div>
         )}
       </main>
+
+      <LilyChatbot language={language} />
     </div>
   );
 };

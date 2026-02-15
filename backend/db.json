@@ -3,28 +3,81 @@
     {
       "id": "abc@gmail.com",
       "email": "abc@gmail.com",
-      "phone": null,
-      "password": "$2b$12$snyuJ.wXbf.2Zumd8Axod.kawUYANPaDPHQ5v85VAn4UIswBZbLHW",
+      "password": "$2b$12$hFa4d6iFQ5QcbhemwHzJcesroOBgodr.tE2oCsrIIGCgE.uIQ4bjC",
       "onboarding_completed": true,
       "profile_completed": true,
-      "language_selected": true,
+      "created_at": "2026-02-15T09:37:55.991722",
+      "student_type": "Undergraduate",
+      "gender": "Female",
+      "location": "Odisha",
+      "semester": 5,
+      "language": "en",
       "voice_enabled": true,
-      "preferences_set": true,
-      "intent_set": true,
-      "created_at": "2026-02-14T10:02:24.441640",
+      "interests": [
+        "IT",
+        "Engineering",
+        "Sports"
+      ],
+      "intents": [
+        "Internships",
+        "Hackathons"
+      ]
+    },
+    {
+      "id": "mukti@gmail.com",
+      "email": "mukti@gmail.com",
+      "password": "$2b$12$S9V2lM6u469Y7IEw1OfTk.AT9OUKWNWP2UjINP4VxNWFFL.ursqtm",
+      "onboarding_completed": true,
+      "profile_completed": true,
+      "created_at": "2026-02-15T09:41:34.408189",
       "student_type": "Undergraduate",
       "gender": "Female",
       "location": "Odisha",
       "semester": 8,
-      "language": "mr",
+      "language": "en",
+      "voice_enabled": false,
       "interests": [
         "Engineering",
         "Education",
-        "Sports"
+        "Government"
       ],
       "intents": [
-        "Scholarships",
+        "Fellowships",
+        "Competitions",
+        "Hackathons",
         "Internships"
+      ]
+    },
+    {
+      "id": "Ritu@gmail.com",
+      "email": "Ritu@gmail.com",
+      "password": "$2b$12$3Jwp4NVJ73p7d/f13fouJu9yPZ9qweqIvtTfjs/0A722aG1YOsuJW",
+      "onboarding_completed": false,
+      "profile_completed": false,
+      "created_at": "2026-02-15T10:49:32.141141"
+    },
+    {
+      "id": "Akanshya@gmail.com",
+      "email": "Akanshya@gmail.com",
+      "password": "$2b$12$Anu4ejKSdZISdp5tDUmJXu4OXQW43pLxymnNjKu2eyEOFPYU/8vum",
+      "onboarding_completed": true,
+      "profile_completed": true,
+      "created_at": "2026-02-15T10:50:48.929797",
+      "student_type": "Undergraduate",
+      "gender": "Female",
+      "location": "Odisha",
+      "semester": 2,
+      "language": "hi",
+      "voice_enabled": false,
+      "interests": [
+        "Business",
+        "Engineering",
+        "Arts"
+      ],
+      "intents": [
+        "Internships",
+        "Competitions",
+        "Hackathons"
       ]
     }
   ]

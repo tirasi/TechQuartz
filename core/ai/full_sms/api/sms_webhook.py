@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Form
 from fastapi.responses import PlainTextResponse
-from ai.full_sms.core.response_generator import handle_sms
+from core.response_generator import handle_sms
 router = APIRouter()
 
 @router.post("/sms/webhook")
