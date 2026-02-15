@@ -1,23 +1,14 @@
-from fastapi import FastAPI, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import timedelta
-from dotenv import load_dotenv
+from typing import Optional
+import json
+import os
+from datetime import datetime, timedelta
+import jwt
+from passlib.context import CryptContext
 
-load_dotenv()
+app = FastAPI()
 
-from models import UserRegistration, LoginRequest, OTPRequest
-from auth import (
-    verify_password, create_access_token, verify_token,
-    generate_otp, store_otp, verify_otp, ACCESS_TOKEN_EXPIRE_MINUTES
-)
-from user_service import create_user, get_user_by_identifier, get_user_by_id, user_to_response
-from sms_service import send_otp_sms
-from database import load_users, save_users
-
-app = FastAPI(title="Authentication API", version="1.0.0")
-
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -26,122 +17,260 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-security = HTTPBearer()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+SECRET_KEY = "your-secret-key-change-in-production"
+ALGORITHM = "HS256"
 
+DB_PATH = os.path.join(os.path.dirname(__file__), "db.json")
 
-# 🔐 Get Current User
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    token = credentials.credentials
+def init_db():
+    if not os.path.exists(DB_PATH):
+        with open(DB_PATH, "w") as f:
+            json.dump({"users": []}, f)
+
+init_db()
+
+def load_db():
+    with open(DB_PATH, "r") as f:
+        return json.load(f)
+
+def save_db(data):
+    with open(DB_PATH, "w") as f:
+        json.dump(data, f, indent=2)
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(plain: str, hashed: str) -> bool:
+    return pwd_context.verify(plain, hashed)
+
+def create_token(user_id: str) -> str:
+    payload = {
+        "sub": user_id,
+        "exp": datetime.utcnow() + timedelta(days=7)
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+def verify_token(token: str) -> Optional[str]:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload.get("sub")
+    except:
+        return None
+
+def get_current_user(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="No token")
+    
+    token = authorization.replace("Bearer ", "")
     user_id = verify_token(token)
-
-    if user_id is None:
-        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
-
-    user = await get_user_by_id(user_id)
-
-    if user is None:
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    db = load_db()
+    user = next((u for u in db["users"] if u["id"] == user_id), None)
+    if not user:
         raise HTTPException(status_code=401, detail="User not found")
-
     return user
 
-
-# 📝 Register
-@app.post("/register")
-async def register(user_data: UserRegistration):
-    user_id = await create_user(user_data)
-    if user_id is None:
+@app.post("/signup")
+async def signup(data: dict):
+    email = data.get("email")
+    password = data.get("password")
+    
+    if not email:
+        raise HTTPException(status_code=400, detail="Email required")
+    
+    db = load_db()
+    
+    if any(u.get("email") == email for u in db["users"]):
         raise HTTPException(status_code=400, detail="User already exists")
-    return {"message": "User registered successfully", "user_id": user_id}
+    
+    user = {
+        "id": email,
+        "email": email,
+        "password": hash_password(password),
+        "onboarding_completed": False,
+        "profile_completed": False,
+        "created_at": datetime.utcnow().isoformat()
+    }
+    
+    db["users"].append(user)
+    save_db(db)
+    
+    token = create_token(user["id"])
+    return {"access_token": token, "token_type": "bearer"}
 
-
-# 🔐 Login
 @app.post("/login")
-async def login(login_data: LoginRequest):
-
-    user = await get_user_by_identifier(login_data.identifier)
-
+async def login(data: dict):
+    identifier = data.get("identifier")
+    password = data.get("password")
+    
+    db = load_db()
+    
+    user = next((u for u in db["users"] if u.get("email") == identifier), None)
+    
     if not user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    # PASSWORD LOGIN
-    if login_data.login_method == "password":
-
-        if not login_data.password or not verify_password(login_data.password, user["password"]):
-            raise HTTPException(status_code=401, detail="Invalid credentials")
-
-        access_token = create_access_token(
-            data={"sub": user["email"]},   # JSON DB uses email as ID
-            expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        )
-
-        return {"access_token": access_token, "token_type": "bearer"}
-
-    # OTP LOGIN
-    elif login_data.login_method == "otp":
-
-        otp = generate_otp()
-        store_otp(login_data.identifier, otp)
-
-        if not await send_otp_sms(user["phone"], otp):
-            raise HTTPException(status_code=500, detail="Failed to send OTP")
-
-        return {"message": "OTP sent successfully", "requires_otp": True}
-
-
-# 🔑 Verify OTP
-@app.post("/verify-otp")
-async def verify_otp_endpoint(otp_data: OTPRequest):
-
-    user = await get_user_by_identifier(otp_data.identifier)
-
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    if not verify_otp(otp_data.identifier, otp_data.otp):
-        raise HTTPException(status_code=401, detail="Invalid or expired OTP")
-
-    access_token = create_access_token(
-        data={"sub": user["email"]},
-        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    )
-
-    return {"access_token": access_token, "token_type": "bearer"}
-
-
-# 👤 Get Current User
-@app.get("/me")
-async def get_current_user_info(current_user=Depends(get_current_user)):
-    return user_to_response(current_user)
-
-
-# 🧠 Onboarding Status
-@app.get("/onboarding-status")
-async def onboarding_status(current_user: dict = Depends(get_current_user)):
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    if not verify_password(password, user["password"]):
+        raise HTTPException(status_code=401, detail="Wrong password")
+    
+    token = create_token(user["id"])
     return {
-        "onboarding_completed": current_user.get("onboarding_completed", False),
-        "language_selected": current_user.get("language_selected", False),
-        "voice_enabled": current_user.get("voice_enabled", False)
+        "access_token": token,
+        "token_type": "bearer",
+        "onboarding_completed": user.get("onboarding_completed", False),
+        "profile_completed": user.get("profile_completed", False)
     }
 
+@app.get("/me")
+async def get_me(authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    user_copy = current_user.copy()
+    user_copy.pop("password", None)
+    return user_copy
 
-# 🧠 Complete Onboarding
-@app.post("/complete-onboarding")
-async def complete_onboarding(data: dict, current_user: dict = Depends(get_current_user)):
+@app.post("/profile")
+async def update_profile(data: dict, authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    db = load_db()
+    
+    for user in db["users"]:
+        if user["id"] == current_user["id"]:
+            user["student_type"] = data.get("student_type")
+            user["gender"] = data.get("gender")
+            user["location"] = data.get("location")
+            user["semester"] = data.get("semester")
+            user["profile_completed"] = True
+            break
+    
+    save_db(db)
+    return {"message": "Profile updated"}
 
-    users = load_users()
-    email = current_user.get("email")
+@app.post("/language")
+async def update_language(data: dict, authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    db = load_db()
+    
+    for user in db["users"]:
+        if user["id"] == current_user["id"]:
+            user["language"] = data.get("language")
+            user["voice_enabled"] = data.get("voice_enabled")
+            break
+    
+    save_db(db)
+    return {"message": "Language updated"}
 
-    if email in users:
-        users[email]["language_selected"] = True
-        users[email]["voice_enabled"] = data.get("voice_enabled", False)
-        users[email]["onboarding_completed"] = True
+@app.post("/preferences")
+async def update_preferences(data: dict, authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    db = load_db()
+    
+    for user in db["users"]:
+        if user["id"] == current_user["id"]:
+            user["interests"] = data.get("interests")
+            break
+    
+    save_db(db)
+    return {"message": "Preferences updated"}
 
-        save_users(users)
+@app.post("/intent")
+async def update_intent(data: dict, authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    db = load_db()
+    
+    for user in db["users"]:
+        if user["id"] == current_user["id"]:
+            user["intents"] = data.get("intents")
+            user["onboarding_completed"] = True
+            break
+    
+    save_db(db)
+    return {"message": "Intent updated"}
 
-    return {"message": "Onboarding completed"}
+@app.get("/opportunities")
+async def get_opportunities(authorization: str = Header(None)):
+    current_user = get_current_user(authorization)
+    
+    mock_opps = [
+        {
+            "id": "1",
+            "title": "National Scholarship for SC Students",
+            "type": "scholarship",
+            "provider": "Ministry of Social Justice",
+            "amount": "₹50,000/year",
+            "deadline": "2026-03-31",
+            "description": "Scholarship for SC students pursuing higher education",
+            "eligibility": "SC category, Annual income < 2.5L",
+            "matchScore": 95,
+            "whyMatch": "Matches your education level and category"
+        },
+        {
+            "id": "2",
+            "title": "AICTE Pragati Scholarship for Girls",
+            "type": "scholarship",
+            "provider": "AICTE",
+            "amount": "₹50,000/year",
+            "deadline": "2026-04-15",
+            "description": "Scholarship for girl students in technical education",
+            "eligibility": "Female, Technical degree/diploma",
+            "matchScore": 92,
+            "whyMatch": "Perfect match for female engineering students"
+        },
+        {
+            "id": "3",
+            "title": "Google Summer of Code",
+            "type": "internship",
+            "provider": "Google",
+            "amount": "$3000-$6600",
+            "deadline": "2026-04-02",
+            "description": "Open source development internship",
+            "eligibility": "Students 18+, Programming skills",
+            "matchScore": 88,
+            "whyMatch": "Matches your IT interests"
+        },
+        {
+            "id": "4",
+            "title": "PM-YUVA Scheme",
+            "type": "scheme",
+            "provider": "Ministry of Education",
+            "amount": "₹50,000",
+            "deadline": "2026-05-31",
+            "description": "Mentorship program for young authors",
+            "eligibility": "Age 30 or below",
+            "matchScore": 85,
+            "whyMatch": "Great for creative students"
+        },
+        {
+            "id": "5",
+            "title": "Smart India Hackathon",
+            "type": "internship",
+            "provider": "AICTE",
+            "amount": "₹1,00,000",
+            "deadline": "2026-03-15",
+            "description": "National level hackathon for students",
+            "eligibility": "Students from recognized institutions",
+            "matchScore": 90,
+            "whyMatch": "Perfect for tech enthusiasts"
+        }
+    ]
+    
+    return {"opportunities": mock_opps}
 
+@app.post("/sms-webhook")
+async def sms_webhook(data: dict):
+    message = data.get("message", "")
+    phone = data.get("phone", "")
+    
+    response = f"Thanks for your message: {message}. We'll get back to you soon!"
+    
+    return {"status": "success", "response": response, "phone": phone}
 
-# Root
 @app.get("/")
 async def root():
-    return {"message": "Authentication API is running"}
+    return {"message": "InfoNest API is running"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
